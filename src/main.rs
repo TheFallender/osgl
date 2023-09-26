@@ -30,7 +30,13 @@ fn launch_original_exe() -> io::Result<()> {
     // Build the original executable name
     let original_exe = exe_name.replace(".exe", "") + "_original.exe";
 
-    // Launch the original executable
-    Command::new(format!("./{}", original_exe)).spawn()?;
+    // Collect the command-line arguments
+    let args: Vec<String> = env::args().skip(1).collect();
+
+    // Spawn the original executable with the collected arguments
+    Command::new(format!("./{}", original_exe))
+        .args(&args)
+        .spawn()?;
+
     Ok(())
 }
